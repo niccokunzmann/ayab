@@ -9,6 +9,7 @@ install:
   - pip install -r requirements-test.txt
 script:
   - python setup.py coverage
+  - py.test --cov=ayab
 addons:
   code_climate:
     repo_token: 24bbd583e2973cee9102e8cd859b63cb6b5256e1cd94ec0cf53ffcef84a8b53d
