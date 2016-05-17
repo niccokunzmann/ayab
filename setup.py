@@ -2,11 +2,12 @@
 
 '''The setup and build script for the ayab library.'''
 
+import os
+import sys
+
 __author__ = 'AllYarnsAreBeautiful'
 __version__ = '0.0.1'
 
-import os
-import sys
 
 def read_file_named(file_name):
     here = os.path.dirname(__file__)
@@ -16,10 +17,10 @@ def read_file_named(file_name):
 
 # The base package metadata to be used by both distutils and setuptools
 METADATA = dict(
-    name = "ayab",
-    version = __version__,
-    packages = ['ayab'],
-    author = __author__,
+    name="ayab",
+    version=__version__,
+    packages=['ayab'],
+    author=__author__,
     author_email='niccokunzmann@rambler.ru',
     description='Python library for ayab knitting machines.',
     license='MIT',
@@ -33,7 +34,7 @@ from setuptools.command.test import test as TestCommand
 class PyTest(TestCommand):
 
     TEST_ARGS = []
-    
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_suite = True
