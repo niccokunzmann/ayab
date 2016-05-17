@@ -5,7 +5,7 @@ python:
   - "3.4"
   - "3.5"
 install: 
-  - pip install --user -r requirements.txt
-  - pip install --user -r requirements-test.txt
+  - pip install -r requirements.txt
+  - pip install -r requirements-test.txt
 script:
   - setup.py coverage
