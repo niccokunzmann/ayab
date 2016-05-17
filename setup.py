@@ -28,30 +28,18 @@ METADATA = dict(
 )
 
 # Run tests in setup
-import setuptools.command.test
+from setuptools.command.test import test as TestCommand
 
-class PyTest(setuptools.command.test.test):
-    # from https://github.com/j0057/setuptools-version-command/commit/527cd2aa289028a3cd6dc405ad2dd4e0d35f15bc
-    # also look at https://github.com/pytest-dev/pytest/blob/master/setup.py
-    def initialize_options(self):
-        setuptools.command.test.test.initialize_options(self)
-
+class PyTest(TestCommand):
     def finalize_options(self):
-        setuptools.command.test.test.finalize_options(self)
-        self.test_args = []
+        TestCommand.finalize_options(self)
+        self.test_args = ["--cov=ayab"]
         self.test_suite = True
 
     def run_tests(self):
-        # XXX: If I import pytest and call pytest.main, the setuptools_version_command module is already loaded, I think because
-        # setuptools has it loaded as an entry_point. That means the top-level statements don't get executed while coverage is
-        # watching, which means 16 missed statements. Reloading the module doesn't work, so the next best thing is to just run
-        # the tests in a new process. However, it does mean that py.test has to be installed in either the system or the user's
-        # site-packages.
-
-        # import pytest
-        # pytest.main()
-
-        os.system('py.test')
+        import pytest
+        errcode = pytest.main(self.test_args)
+        sys.exit(errcode)
 
 # Extra package metadata to be used only if setuptools is installed
 required_packages = [ package for package in
