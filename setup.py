@@ -31,10 +31,13 @@ METADATA = dict(
 from setuptools.command.test import test as TestCommand
 
 class PyTest(TestCommand):
-    test_args = []
+
+    TEST_ARGS = []
+    
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_suite = True
+        self.test_args = self.TEST_ARGS
 
     def run_tests(self):
         import pytest
@@ -42,7 +45,7 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 class TestCoverage(PyTest):
-    test_args = ["--cov=ayab"]
+    TEST_ARGS = ["--cov=ayab"]
 
 # Extra package metadata to be used only if setuptools is installed
 required_packages = [ package for package in
