@@ -1,7 +1,9 @@
 ayab
 ====
 
-
+.. image:: https://travis-ci.org/AllYarnsAreBeautiful/ayab.svg
+   :target: https://travis-ci.org/AllYarnsAreBeautiful/ayab
+   :alt: Build Status
 
 .. image:: https://codeclimate.com/github/AllYarnsAreBeautiful/ayab/badges/gpa.svg
    :target: https://codeclimate.com/github/AllYarnsAreBeautiful/ayab
