@@ -9,6 +9,6 @@ install:
   - pip install -r requirements-test.txt
 script:
   - python setup.py coverage_pep8_test
-after_scipt:
+after_script:
   # https://github.com/codeclimate/python-test-reporter
   - codeclimate-test-reporter
