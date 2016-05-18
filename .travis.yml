@@ -9,6 +9,6 @@ install:
   - pip install -r requirements-test.txt
 script:
   - python setup.py coverage_pep8_test
-addons:
-  code_climate:
-    repo_token: 24bbd583e2973cee9102e8cd859b63cb6b5256e1cd94ec0cf53ffcef84a8b53d
+after_scipt:
+  # https://github.com/codeclimate/python-test-reporter
+  - codeclimate-test-reporter

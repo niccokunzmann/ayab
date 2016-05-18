@@ -103,6 +103,7 @@ SETUPTOOLS_METADATA = dict(
     zip_safe=False,
     cmdclass={
         "test": TestCommand,
+        "coverage": CoverageTestCommand,
         "coverage_test": CoverageTestCommand,
         "pep8": PEP8TestCommand,
         "pep8_test": PEP8TestCommand,
