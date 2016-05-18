@@ -68,6 +68,18 @@ class FlakesTestCommand(TestCommand):
 class CoveragePEP8TestCommand(TestCommand):
     TEST_ARGS = ["--cov=ayab", "--pep8"]
 
+
+class LintCommand(TestCommandBase):
+
+    def finalize_options(self):
+        TestCommandBase.finalize_options(self)
+        self.test_suite = True
+        self.test_args = ["ayab"]
+
+    def run_tests(self):
+        from pylint.lint import Run
+        Run(self.test_args)
+
 # Extra package metadata to be used only if setuptools is installed
 required_packages = \
     read_filled_lines_from_file_named("requirements.txt")
@@ -97,6 +109,7 @@ SETUPTOOLS_METADATA = dict(
         "flakes": FlakesTestCommand,
         "fakes_test": FlakesTestCommand,
         "coverage_pep8_test": CoveragePEP8TestCommand,
+        "lint": LintCommand,
         },
 )
 
