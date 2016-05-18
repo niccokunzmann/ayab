@@ -8,7 +8,7 @@ install:
   - pip install -r requirements.txt
   - pip install -r requirements-test.txt
 script:
-  - python setup.py coverage_pep8_test
+  - py.test --cov=ayab --pep8
 after_script:
   # https://github.com/codeclimate/python-test-reporter
   - codeclimate-test-reporter
