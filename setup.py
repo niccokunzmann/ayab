@@ -4,14 +4,14 @@
 
 import os
 import sys
-from setuptools.command.test import test as TestCommand
+from setuptools.command.test import test as TestCommandBase
 
 __author__ = 'AllYarnsAreBeautiful'
-__version__ = '0.0.1'
-
+here = os.path.dirname(__file__)
+sys.path.insert(0, here)
+from ayab import __version__
 
 def read_file_named(file_name):
-    here = os.path.dirname(__file__)
     file_path = os.path.join(here, file_name)
     with open(file_path) as f:
         return f.read()
@@ -37,12 +37,12 @@ METADATA = dict(
 # Run tests in setup
 
 
-class PyTest(TestCommand):
+class TestCommand(TestCommandBase):
 
     TEST_ARGS = []
 
     def finalize_options(self):
-        TestCommand.finalize_options(self)
+        TestCommandBase.finalize_options(self)
         self.test_suite = True
         self.test_args = self.TEST_ARGS
 
@@ -52,8 +52,17 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-class TestCoverage(PyTest):
+class CoverageTestCommand(TestCommand):
     TEST_ARGS = ["--cov=ayab"]
+
+class FlakesTestCommand(TestCommand):
+    TEST_ARGS = ["--flakes"]
+
+class FlakesCommand(TestCommand):
+    TEST_ARGS = ["--flakes", "-m", "flakes"]
+
+class CoverageFlakesTestCommand(TestCommand):
+    TEST_ARGS = ["--cov=ayab", "--flakes"]
 
 # Extra package metadata to be used only if setuptools is installed
 required_packages = \
@@ -76,10 +85,13 @@ SETUPTOOLS_METADATA = dict(
         tests=['test_*.py'],
     ),
     zip_safe=False,
-    cmdclass=dict(
-        test=PyTest,
-        coverage=TestCoverage,
-        ),
+    cmdclass={
+        "test":TestCommand,
+        "coverage_test":CoverageTestCommand,
+        "flakes":FlakesCommand,
+        "flakes_test":FlakesTestCommand,
+        "coverage_flakes_test":CoverageFlakesTestCommand,
+        },
 )
 
 
