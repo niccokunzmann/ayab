@@ -5,16 +5,17 @@
 import os
 import sys
 from setuptools.command.test import test as TestCommandBase
-
-__author__ = 'AllYarnsAreBeautiful'
-here = os.path.dirname(__file__)
-sys.path.insert(0, here)
 from ayab import __version__
 
+__author__ = 'AllYarnsAreBeautiful'
+
+
 def read_file_named(file_name):
+    here = os.path.dirname(__file__)
     file_path = os.path.join(here, file_name)
     with open(file_path) as f:
         return f.read()
+
 
 def read_filled_lines_from_file_named(file_name):
     content = read_file_named("requirements-test.txt")
@@ -55,14 +56,17 @@ class TestCommand(TestCommandBase):
 class CoverageTestCommand(TestCommand):
     TEST_ARGS = ["--cov=ayab"]
 
+
+class PEP8TestCommand(TestCommand):
+    TEST_ARGS = ["--pep8"]
+
+
 class FlakesTestCommand(TestCommand):
     TEST_ARGS = ["--flakes"]
 
-class FlakesCommand(TestCommand):
-    TEST_ARGS = ["--flakes", "-m", "flakes"]
 
-class CoverageFlakesTestCommand(TestCommand):
-    TEST_ARGS = ["--cov=ayab", "--flakes"]
+class CoveragePEP8TestCommand(TestCommand):
+    TEST_ARGS = ["--cov=ayab", "--pep8"]
 
 # Extra package metadata to be used only if setuptools is installed
 required_packages = \
@@ -86,11 +90,13 @@ SETUPTOOLS_METADATA = dict(
     ),
     zip_safe=False,
     cmdclass={
-        "test":TestCommand,
-        "coverage_test":CoverageTestCommand,
-        "flakes":FlakesCommand,
-        "flakes_test":FlakesTestCommand,
-        "coverage_flakes_test":CoverageFlakesTestCommand,
+        "test": TestCommand,
+        "coverage_test": CoverageTestCommand,
+        "pep8": PEP8TestCommand,
+        "pep8_test": PEP8TestCommand,
+        "flakes": FlakesTestCommand,
+        "fakes_test": FlakesTestCommand,
+        "coverage_pep8_test": CoveragePEP8TestCommand,
         },
 )
 
