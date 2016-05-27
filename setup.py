@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-
-'''The setup and build script for the ayab library.'''
+PACKAGE_NAME = "ayab"
+__doc__ = '''The setup and build script for the {} library.'''.format(PACKAGE_NAME)
 
 import os
 import sys
 from setuptools.command.test import test as TestCommandBase
-from ayab import __version__
+__version__ = __import__(PACKAGE_NAME).__version__
 
-__author__ = 'AllYarnsAreBeautiful'
+__author__ = 'Nicco Kunzmann'
 
 
 def read_file_named(file_name):
@@ -24,14 +24,14 @@ def read_filled_lines_from_file_named(file_name):
 
 # The base package metadata to be used by both distutils and setuptools
 METADATA = dict(
-    name="ayab",
+    name=PACKAGE_NAME,
     version=__version__,
-    packages=['ayab'],
+    packages=[PACKAGE_NAME],
     author=__author__,
     author_email='niccokunzmann@rambler.ru',
-    description='Python library for ayab knitting machines.',
+    description='Python library for knitting machines.',
     license='MIT',
-    url='https://github.com/AllYarnsAreBeautiful/ayab',
+    url='https://github.com/AllYarnsAreBeautiful/' + PACKAGE_NAME,
     keywords='knitting ayab fashion',
 )
 
@@ -54,7 +54,7 @@ class TestCommand(TestCommandBase):
 
 
 class CoverageTestCommand(TestCommand):
-    TEST_ARGS = ["--cov=ayab"]
+    TEST_ARGS = ["--cov=" + PACKAGE_NAME]
 
 
 class PEP8TestCommand(TestCommand):
@@ -66,7 +66,7 @@ class FlakesTestCommand(TestCommand):
 
 
 class CoveragePEP8TestCommand(TestCommand):
-    TEST_ARGS = ["--cov=ayab", "--pep8"]
+    TEST_ARGS = ["--cov=" + PACKAGE_NAME, "--pep8"]
 
 
 class LintCommand(TestCommandBase):
@@ -74,7 +74,7 @@ class LintCommand(TestCommandBase):
     def finalize_options(self):
         TestCommandBase.finalize_options(self)
         self.test_suite = True
-        self.test_args = ["ayab"]
+        self.test_args = [PACKAGE_NAME]
 
     def run_tests(self):
         from pylint.lint import Run
